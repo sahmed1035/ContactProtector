@@ -3,9 +3,17 @@
 // import Express from "express"; we can't use the import syntax without implementing babble or typescript. otherwise we have to use required syntax to bring in modules which is called commonJS.
 // when we use React it actually uses ES6 modules which has import syntax.
 const express = require("express");
-// initializing express into a variable called app
+// bringing in connectDB
+const connectDB = require("./config/db");
+
+// initializing express into a variable called app.
 const app = express();
 
+// calling connectDB to connect to the database
+connectDB();
+
+// Init Middleware. middle ware used to be body parser but now included with express. Now we can accept data
+app.use(express.json({ extended: false }));
 // creating a variable for the port. process.env.PORT will look for an environment variable called PORT first and
 // this will be used in production. OR anyport we want ||
 const PORT = process.env.PORT || 5000;
