@@ -32,5 +32,5 @@ const ContactSchema = mongoose.Schema({
     default: Date.now
   }
 });
-// will be using it in user route file
+// will be using it in contacts.js route file
 module.exports = mongoose.model("contact", ContactSchema);
