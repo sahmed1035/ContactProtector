@@ -84,8 +84,43 @@ router.put("/:id", (req, res) => {
 // @route           DELETE api/contacts/:id
 // @description     Delete contact
 // @access          Private
-router.delete("/:id", (req, res) => {
-  res.send("Delete contact");
+router.delete("/:id", auth, async (req, res) => {
+  // we want to pull out the data
+  const { name, email, phone, type } = res.body;
+
+  // since this is an update, we build a contact object based on the fields that are submitted
+  // we want to check to see if these fields are submitted.
+  const contactFields = {};
+  if (name) contactFields.name = name; // if there is a name add that to contactFields
+  if (email) contactFields.email = email;
+  if (phone) contactFields.phone = phone;
+  if (type) contactFields.type = type;
+
+  // find contact by id in the database. take the id from the param
+  try {
+    let contact = await Contact.findById(req.params.id);
+
+    // if contact not found in the database by that id, send a message
+    if (!contact) return res.status(404).json({ msg: "Contact not found!" });
+
+    // we need to make sure that the user owns the contact. contact.user => token in the database
+    if (contact.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: "Not authorized!" });
+    }
+
+    // Now updating the contact. if doesn't exists then create a new one.
+    contact = await Contact.findByIdAndUpdate(
+      req.params.id,
+      { $set: contactFields },
+      { new: true }
+    );
+
+    // sending new contact
+    res.jsoon(contact);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
 });
 
 // exporting the router
