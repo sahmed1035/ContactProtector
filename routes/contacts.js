@@ -76,17 +76,11 @@ router.post(
 // @route           PUT api/contacts/:id
 // @description     Update contact
 // @access          Private
-router.put("/:id", (req, res) => {
-  res.send("Update contact");
-});
-
-// Fourth. we need to tell what contatct to delete /:id
-// @route           DELETE api/contacts/:id
-// @description     Delete contact
-// @access          Private
-router.delete("/:id", auth, async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   // we want to pull out the data
-  const { name, email, phone, type } = res.body;
+
+  // pulling out the data from the body. deconstructing
+  const { name, email, phone, type } = req.body;
 
   // since this is an update, we build a contact object based on the fields that are submitted
   // we want to check to see if these fields are submitted.
@@ -116,7 +110,35 @@ router.delete("/:id", auth, async (req, res) => {
     );
 
     // sending new contact
-    res.jsoon(contact);
+    res.json(contact);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// Fourth. we need to tell what contatct to delete /:id
+// @route           DELETE api/contacts/:id
+// @description     Delete contact
+// @access          Private
+router.delete("/:id", auth, async (req, res) => {
+  // find contact by id in the database. take the id from the param
+  try {
+    let contact = await Contact.findById(req.params.id);
+
+    // if contact not found in the database by that id, send a message
+    if (!contact) return res.status(404).json({ msg: "Contact not found!" });
+
+    // we need to make sure that the user owns the contact. contact.user => token in the database
+    if (contact.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: "Not authorized!" });
+    }
+
+    // Now deleting the contact.
+    await Contact.findByIdAndRemove(req.params.id);
+
+    // sending new contact
+    res.json({ msg: "Contact Removed!" });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
