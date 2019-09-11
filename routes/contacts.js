@@ -32,10 +32,45 @@ router.get("/", auth, async (req, res) => {
 // Second
 // @route           POST api/contacts
 // @description     Add new contact
-// @access          Private
-router.post("/", (req, res) => {
-  res.send("Add contact");
-});
+// @access          Private route so going to add auth and validation as second parameter
+router.post(
+  "/",
+  [
+    auth,
+    [
+      check("name", "Name is required.")
+        .not()
+        .isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    // pulling out the data from the body. deconstructing
+    const { name, email, phone, type } = req.body;
+
+    // going to do a try catch. inside the try, create a newContact and set that to new Contact(). pass an object with
+    // the field which is the name, email, phone, type
+    try {
+      const newContact = new Contact({
+        name,
+        email,
+        phone,
+        type,
+        user: req.user.id //have access through auth middleware
+      });
+      // we are going to add newContact to contact. save it to the database
+      const contact = await newContact.save();
+      res.json(contact); // sending to client
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server Error!");
+    }
+  }
+);
 
 // Third. we need to tell what contact to update /:id
 // @route           PUT api/contacts/:id
