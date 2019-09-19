@@ -4,6 +4,7 @@
  */
 
 import React, { Fragment, useContext } from "react";
+import ContactItem from "./ContactItem";
 import ContactContext from "../../context/contact/contactContext";
 
 const Contacts = () => {
@@ -15,10 +16,11 @@ const Contacts = () => {
   const { contacts } = contactContext;
   // in the return we will have an expression to map through the contacts. for each one we will call it contact
   // we need to embed this to our homepae.
+  // embadding ContactItem, passing in specific contact as a prop. key for the specific contact
   return (
     <Fragment>
       {contacts.map(contact => (
-        <h3>{contact.name}</h3>
+        <ContactItem key={contact.id} contact={contact} />
       ))}
     </Fragment>
   );

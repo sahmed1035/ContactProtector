@@ -53,9 +53,10 @@ const ContactState = props => {
       }
     ]
   };
+
   // pulling out the state and dispatching from our reducer by using the useReducer hook.
   // state allows us to access anything in our state. Dispatch allows us to dispatch objects to the reducer.
-  conts[(state, dispatch)] = useReducer(contactReducer, initialState);
+  const [state, dispatch] = useReducer(contactReducer, initialState);
 
   // ALL OF OUR ACTIONS>>>
 
@@ -86,4 +87,4 @@ const ContactState = props => {
   );
 };
 
-export default ContactStatel;
+export default ContactState;
