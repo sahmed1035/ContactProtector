@@ -30,7 +30,8 @@ Navbar.propTypes = {
 // Default
 Navbar.defaultProps = {
   title: " Contact Protector",
-  icon: "fas fa-id-card-alt"
+  // icon: "fas fa-id-card-alt"
+  icon: "fas fa-phone-alt fa-lg fa-spin"
 };
 
 export default Navbar;

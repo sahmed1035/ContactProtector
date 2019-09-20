@@ -1,5 +1,6 @@
 // ContactItem.js is for each individual contact in the list to have its own component.
 import React from "react";
+import PropTypes from "prop-types";
 
 const ContactItem = ({ contact }) => {
   // destructuring the contact prop that is passed in.
@@ -10,16 +11,38 @@ const ContactItem = ({ contact }) => {
       <h3 className="text-primary text-left">
         {name}{" "}
         <span
+          style={{ float: "right" }}
           className={
-            "badge" +
-            (type === "professional" ? "badge-success" : "badge-primary")
+            "badge " + (type === "personal" ? "badge-primary" : "badge-success")
           }
         >
-          {type}
+          {/* making first letter of type upperCase. concatinating with rest of the letters. */}
+          {type.charAt(0).toUpperCase() + type.slice(1)}
         </span>
       </h3>
+      {/* rest of the fields. Email not required so if it is provided then show it with the icon */}
+      <ul className="list">
+        {email && (
+          <li>
+            <i className="fas fa-envelope-open"></i> {email}
+          </li>
+        )}
+        {phone && (
+          <li>
+            <i className="fas fa-phone" /> {phone}
+          </li>
+        )}
+      </ul>
+      {/* buttons for CRUD */}
+      <p>
+        <button className="btn btn-dark btn-sm">Edit</button>
+        <button className="btn btn-danger btn-sm">Delete</button>
+      </p>
     </div>
   );
 };
 
+ContactItem.propTypes = {
+  contact: PropTypes.object.isRequired
+};
 export default ContactItem;
