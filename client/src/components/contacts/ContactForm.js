@@ -74,6 +74,7 @@ const ContactForm = () => {
         name="type"
         value="personal"
         checked={type === "personal"}
+        onChange={onChange}
       />{" "}
       Personal{" "}
       <input
@@ -81,6 +82,7 @@ const ContactForm = () => {
         name="type"
         value="professional"
         checked={type === "professional"}
+        onChange={onChange}
       />{" "}
       Professional
       {/* submit button. on submit we want to add to our contacts state. need to bring contactContext */}

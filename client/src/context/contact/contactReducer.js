@@ -13,8 +13,16 @@ export default (state, action) => {
   switch (action.type) {
     case ADD_CONTACT:
       return {
+        ...state, // return the current contact
+        contacts: [...state.contacts, action.payload] // since state is immutable, we have to copy what's already there by spread operator
+        // we want to add our data which we sent in the payload.
+      };
+    case DELETE_CONTACT:
+      return {
         ...state,
-        contacts: [...state.contacts, action.payload]
+        contacts: state.contacts.filter(
+          contact => contact.id !== action.payload
+        )
       };
     default:
       return state;
