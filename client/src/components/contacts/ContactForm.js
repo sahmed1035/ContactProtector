@@ -3,12 +3,30 @@
  * instead of setting each field to its own piece of state, we are going to have a single
  * piece of state called contact which will be an object with all the fields.
  */
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import ContactContext from "../../context/contact/contactContext";
 
 const ContactForm = () => {
   // initializing to have access to any methods or state. need to have access to the method call Add Contact.
   const contactContext = useContext(ContactContext);
+
+  // destructuring from contactContext
+  const { addContact, current } = contactContext;
+
+  // using useEffect hook for component did mount lifecycle method. calling setCurrent to fill the form with the current data.
+  useEffect(() => {
+    if (current !== null) {
+      setContact(current);
+    } else {
+      // setting to default state
+      setContact({
+        name: "",
+        email: "",
+        phone: "",
+        type: "personal"
+      });
+    }
+  }, [contactContext, current]); // adding dependencies because we want it to happen on certain occasions. contactContext is changed or current value changed
 
   const [contact, setContact] = useState({
     name: "",
@@ -35,7 +53,7 @@ const ContactForm = () => {
   // OnSUBMIT METHOD
   const onSubmit = e => {
     e.preventDefault();
-    contactContext.addContact(contact); // passing contact state
+    addContact(contact); // passing contact state
     //clearing the form
     setContact({
       name: "",

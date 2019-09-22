@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 const ContactItem = ({ contact }) => {
   // initializing contactContext
   const contactContext = useContext(ContactContext);
-  const { deleteContact } = contactContext;
+  const { deleteContact, setCurrent, clearCurrent } = contactContext;
   // destructuring the contact prop that is passed in.
   // badge class to show personal or professional. span that is dynamic. dependant on the type. using turnary to check if personal or professional
   const { id, name, email, phone, type } = contact;
@@ -15,6 +15,7 @@ const ContactItem = ({ contact }) => {
   // ON Delete METHOD
   const onDelete = () => {
     deleteContact(id);
+    clearCurrent();
   };
 
   return (
@@ -46,7 +47,13 @@ const ContactItem = ({ contact }) => {
       </ul>
       {/* buttons for CRUD */}
       <p>
-        <button className="btn btn-dark btn-sm">Edit</button>
+        <button
+          className="btn btn-dark btn-sm"
+          onClick={() => setCurrent(contact)}
+        >
+          Edit
+        </button>
+
         <button className="btn btn-danger btn-sm" onClick={onDelete}>
           Delete
         </button>

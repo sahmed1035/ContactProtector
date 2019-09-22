@@ -51,7 +51,9 @@ const ContactState = props => {
         phone: "444-444-4444",
         type: "personal"
       }
-    ]
+    ],
+    // state current for the form input with default value of null. when clicking on Edit button, the contact should be put in to the "current"
+    current: null
   };
 
   // pulling out the state and dispatching from our reducer by using the useReducer hook.
@@ -73,8 +75,16 @@ const ContactState = props => {
   };
 
   // Set Current Contact
+  //pass in the current contact to set
+  const setCurrent = contact => {
+    dispatch({ type: SET_CURRENT, payload: contact });
+  };
 
   // clear Current Contact
+  //setting the form back to null
+  const clearCurrent = () => {
+    dispatch({ type: CLEAR_CURRENT });
+  };
 
   // Update Contact
 
@@ -88,8 +98,11 @@ const ContactState = props => {
     <ContactContext.Provider
       value={{
         contacts: state.contacts,
+        current: state.current,
         addContact,
-        deleteContact
+        deleteContact,
+        setCurrent,
+        clearCurrent
       }}
     >
       {props.children}
