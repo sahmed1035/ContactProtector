@@ -34,6 +34,15 @@ export default (state, action) => {
         ...state,
         current: null
       };
+    case UPDATE_CONTACT:
+      return {
+        ...state,
+        //take the contactS array and set that to map. for each contact check the condition to match the id.
+        contacts: state.contacts.map(contact =>
+          contact.id === action.payload.id ? action.payload : contact
+        )
+        //action.payload has the updated contact.
+      };
     default:
       return state;
   }

@@ -11,7 +11,7 @@ const ContactForm = () => {
   const contactContext = useContext(ContactContext);
 
   // destructuring from contactContext
-  const { addContact, current } = contactContext;
+  const { addContact, updateContact, clearCurrent, current } = contactContext;
 
   // using useEffect hook for component did mount lifecycle method. calling setCurrent to fill the form with the current data.
   useEffect(() => {
@@ -50,10 +50,16 @@ const ContactForm = () => {
   const onChange = e =>
     setContact({ ...contact, [e.target.name]: e.target.value });
 
-  // OnSUBMIT METHOD
+  // OnSUBMIT METHOD.
+  //condition. if current is empty then add  contact. else update contact.
   const onSubmit = e => {
     e.preventDefault();
-    addContact(contact); // passing contact state
+    if (current === null) {
+      addContact(contact); // passing contact state
+    } else {
+      updateContact(contact);
+    }
+
     //clearing the form
     setContact({
       name: "",
@@ -62,9 +68,16 @@ const ContactForm = () => {
       type: "personal"
     });
   };
+  // Clear All method calling clearCurrent
+  const clearAll = () => {
+    clearCurrent();
+  };
   return (
     <form onSubmit={onSubmit}>
-      <h2 className="text-primary">Add Contact</h2>
+      {/**Making title dynamic depending on current state.  */}
+      <h2 className="text-primary">
+        {current ? "Edit Contact" : "Add Contact"}
+      </h2>
       <input
         type="text"
         placeholder="Name"
@@ -107,10 +120,17 @@ const ContactForm = () => {
       <div>
         <input
           type="submit"
-          value="Add Contact"
+          value={current ? "Update Contact" : "Add Contact"}
           className="btn btn-primary btn-block"
         />
       </div>
+      {current && (
+        <div>
+          <button className="btn btn-light btn-block" onClick={clearAll}>
+            Clear
+          </button>
+        </div>
+      )}
     </form>
   );
 };
