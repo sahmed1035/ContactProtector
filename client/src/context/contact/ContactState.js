@@ -53,7 +53,8 @@ const ContactState = props => {
       }
     ],
     // state current for the form input with default value of null. when clicking on Edit button, the contact should be put in to the "current"
-    current: null
+    current: null,
+    filtered: null // an array of filtered contacts.
   };
 
   // pulling out the state and dispatching from our reducer by using the useReducer hook.
@@ -92,8 +93,16 @@ const ContactState = props => {
   };
 
   // Filter Contacts
+  // will take a piece of text to filter. dispatch the type: of FILTER_CONTACT
+  const filterContacts = text => {
+    dispatch({ type: FILTER_CONTACTS, payload: text });
+  };
 
   // clear Filter
+  // setting CLEAR_FILTER back to null.
+  const clearFilter = () => {
+    dispatch({ type: CLEAR_FILTER });
+  };
 
   // Return our providers so that we can wrap our entire application with this context.
 
@@ -102,11 +111,14 @@ const ContactState = props => {
       value={{
         contacts: state.contacts,
         current: state.current,
+        filtered: state.filtered,
         addContact,
         deleteContact,
         setCurrent,
         clearCurrent,
-        updateContact
+        updateContact,
+        filterContacts,
+        clearFilter
       }}
     >
       {props.children}

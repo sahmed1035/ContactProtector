@@ -43,6 +43,25 @@ export default (state, action) => {
         )
         //action.payload has the updated contact.
       };
+    case FILTER_CONTACTS:
+      return {
+        ...state,
+        // take the filtered part of the sate which by default is null. set this to state.contacts (this will give us initial contacts)
+        // then run the filter method. filter is a high order array method.
+        // for each contact creating a regular expression. regular expression is going to be the text we want to match.
+        //text is coming in the payload. gi is global insensitive. whether uppercase or lowercase.
+        // match each contact against this regular expression.
+        filter: state.contacts.filter(contact => {
+          const regex = new RegExp(`${action.payload}`, "gi");
+          return contact.name.match(regex) || contact.email.match(regex);
+          // it will return anything where the name OR email matches the text
+        })
+      };
+    case CLEAR_FILTER:
+      return {
+        ...state,
+        filtered: null
+      };
     default:
       return state;
   }

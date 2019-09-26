@@ -28,6 +28,11 @@ const ContactForm = () => {
     }
   }, [contactContext, current]); // adding dependencies because we want it to happen on certain occasions. contactContext is changed or current value changed
 
+  // this contact is the sate of the form. whenever we cahnge an input these change. that's we will be passing.
+  // and that's what we'll get submitted to the update function.
+  // once it gets submitted, it's gonna get called in the ContactState. UpdateContact is going to get passed in.
+  // It's going to dispatch to the reducer the updated contact. Then Reducer will catch it.
+
   const [contact, setContact] = useState({
     name: "",
     email: "",
@@ -58,6 +63,7 @@ const ContactForm = () => {
       addContact(contact); // passing contact state
     } else {
       updateContact(contact);
+      clearAll(contact);
     }
 
     //clearing the form
