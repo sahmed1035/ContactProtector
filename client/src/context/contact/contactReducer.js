@@ -51,7 +51,7 @@ export default (state, action) => {
         // for each contact creating a regular expression. regular expression is going to be the text we want to match.
         //text is coming in the payload. gi is global insensitive. whether uppercase or lowercase.
         // match each contact against this regular expression.
-        filter: state.contacts.filter(contact => {
+        filtered: state.contacts.filter(contact => {
           const regex = new RegExp(`${action.payload}`, "gi");
           return contact.name.match(regex) || contact.email.match(regex);
           // it will return anything where the name OR email matches the text

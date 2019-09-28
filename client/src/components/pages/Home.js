@@ -2,6 +2,7 @@
 import React from "react";
 import Contacts from "../contacts/Contacts";
 import ContactForm from "../contacts/ContactForm";
+import ContactFilter from "../contacts/ContactFilter";
 
 // for the layout of homepage, half page will be form and half will be contacts. will use grid
 const Home = () => {
@@ -14,6 +15,7 @@ const Home = () => {
       {/**First column ending */}
       {/**Second column starting */}
       <div>
+        <ContactFilter />
         <Contacts />
       </div>
       {/**Second column starting */}

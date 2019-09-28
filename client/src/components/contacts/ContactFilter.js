@@ -11,6 +11,7 @@ const ContactFilter = () => {
   // deconstructing
   const { filterContacts, clearFilter, filtered } = contactContext;
 
+  // if filter is equal to null, make the value to be empty. don't want the text inside of it.
   useEffect(() => {
     if (filtered === null) {
       text.current.value = "";
@@ -20,7 +21,7 @@ const ContactFilter = () => {
   // onChange method. getting the value text.current.value
   const onChange = e => {
     if (text.current.value !== "") {
-      fiterContacts(e.target.value);
+      filterContacts(e.target.value);
     } else {
       clearFilter();
     }
