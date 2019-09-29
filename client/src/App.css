@@ -2,13 +2,13 @@
 
 /* Global Styles */
 :root {
-  /* --primary-color: #072e4b; */
-  --primary-color: #e85474;
-  /* --dark-color: #e85474; */
-  --dark-color: #072e4b;
+  --primary-color: #072e4b;
+  /* --primary-color: #e85474; */
+  --dark-color: #006db6;
+  /* --dark-color: #072e4b; */
   --light-color: #f4f4f4;
   --danger-color: #dc3545;
-  --success-color: #ccdb2a;
+  --success-color: #03c04a;
 }
 
 * {
@@ -21,13 +21,13 @@ body {
   font-family: "Roboto", sans-serif;
   font-size: 1rem;
   line-height: 1.6;
-  background-color: #fff;
+  background-color: var(--primary-color);
   color: #333;
 }
 
 a {
-  /* color: var(--primary-color); */
-  color: var(#e85474);
+  color: var(--primary-color);
+  /* color: var(#e85474); */
   text-decoration: none;
 }
 
@@ -49,6 +49,7 @@ img {
   margin: auto;
   overflow: hidden;
   padding: 0 2rem;
+  background: #ccdb2a;
 }
 
 /* Text Styles*/
@@ -97,7 +98,7 @@ img {
 /* Cards */
 .card {
   padding: 1rem;
-  border: #ccc 1px dotted;
+  border: #ccdb2a 1px dotted;
   margin: 0.7rem 0;
 }
 
@@ -107,7 +108,7 @@ img {
 }
 
 .list li {
-  padding-bottom: 0.3rem;
+  padding-bottom: 0.8rem;
 }
 
 /* Padding */
@@ -388,7 +389,7 @@ table th {
   margin-right: 0.6rem;
 }
 
-/* Animation (Add After) */
+/* Animation for react-transition-group (Add After) */
 .item-enter {
   opacity: 0;
 }

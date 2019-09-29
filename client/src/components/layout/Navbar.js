@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const Navbar = ({ title, icon }) => {
   return (
     <div className="navbar bg-primary">
-      <h1>
+      <h1 style={{ "padding-left": "40%" }}>
         <i className={icon} /> {title}
       </h1>
       <ul>

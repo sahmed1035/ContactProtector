@@ -4,6 +4,7 @@
  */
 
 import React, { Fragment, useContext } from "react";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import ContactItem from "./ContactItem";
 import ContactContext from "../../context/contact/contactContext";
 
@@ -24,14 +25,21 @@ const Contacts = () => {
   // embadding ContactItem, passing in specific contact as a prop. key for the specific contact
   return (
     <Fragment>
-      {/* need to figure out if there is anything inside the filtered or not. if there is, that's what we want to show. */}
-      {filtered !== null
-        ? filtered.map(contact => (
-            <ContactItem key={contact.id} contact={contact} />
-          ))
-        : contacts.map(contact => (
-            <ContactItem key={contact.id} contact={contact} />
-          ))}
+      <TransitionGroup>
+        {/* need to figure out if there is anything inside the filtered or not. if there is, that's what we want to show. */}
+        {filtered !== null
+          ? filtered.map(contact => (
+              // classNameS with an s
+              <CSSTransition key={contact.id} timeout={500} classNames="item">
+                <ContactItem contact={contact} />
+              </CSSTransition>
+            ))
+          : contacts.map(contact => (
+              <CSSTransition key={contact.id} timeout={500} classNames="item">
+                <ContactItem contact={contact} />
+              </CSSTransition>
+            ))}
+      </TransitionGroup>
     </Fragment>
   );
 };

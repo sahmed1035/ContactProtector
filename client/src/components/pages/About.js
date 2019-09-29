@@ -2,7 +2,7 @@ import React from "react";
 
 const About = () => {
   return (
-    <div>
+    <div style={{ background: "white", color: "black" }}>
       <h1>About This App</h1>
       <p className="my-1">
         This is contact protector application where a user can register, login
@@ -23,7 +23,7 @@ const About = () => {
         </li>
         <li>implemented Middleware that only pertains to protected-routes.</li>
       </ul>
-      <p className="bg-dark p">
+      <p className="bg-dark p" style={{ background: "white", color: "black" }}>
         <strong>Version</strong> 1.0.0
       </p>
     </div>
