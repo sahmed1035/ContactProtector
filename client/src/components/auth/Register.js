@@ -1,7 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 // useState is for using component level states. for the form input values
+import AlertContext from "../../context/alert/alertContext"; // alert for password match
 
 const Register = () => {
+  // initializing alertContext
+  const alertContext = useContext(AlertContext);
+
+  // pulling out setAlert from alertContext
+  const { setAlert } = alertContext;
+
   const [user, setUser] = useState({
     //passing in an object with the fields of name and email
     name: "",
@@ -16,11 +23,18 @@ const Register = () => {
   // onChange method. spread operator to get the current value of the user. e.target.name to GET the label(attribute). e.target.value to SET the value
   const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
 
-  // onSubmit method
+  // onSubmit method: checking for required fiels and password match.
   const onSubmit = e => {
     e.preventDefault();
-    console.log("Register form submitted.");
+    if (name === "" || email === "" || password === "") {
+      setAlert("All fields are required", "danger");
+    } else if (password !== password2) {
+      setAlert("Passwords do not match!", "danger");
+    } else {
+      console.log("Register form submitted.");
+    }
   };
+
   return (
     <div className="form-container">
       <h1>
@@ -35,7 +49,13 @@ const Register = () => {
         {/* Email */}
         <div className="form-group">
           <label htmlFor="email">Email</label>
-          <input type="email" name="email" value={email} onChange={onChange} />
+          <input
+            type="email"
+            name="email"
+            value={email}
+            onChange={onChange}
+            required
+          />
         </div>
         {/* Password */}
         <div className="form-group">
@@ -45,6 +65,8 @@ const Register = () => {
             name="password"
             value={password}
             onChange={onChange}
+            required
+            minLength="6"
           />
         </div>
         {/* Confirm Password */}

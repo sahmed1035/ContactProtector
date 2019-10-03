@@ -22,8 +22,8 @@ const App = () => {
               <Navbar />
               <div className="container">
                 {/* this switch will have all of our routes with the exact paths */}
+                <Alerts />
                 <Switch>
-                  <Alerts />
                   <Route exact path="/" component={Home} />
                   <Route exact path="/about" component={About} />
                   <Route exact path="/login" component={Login} />
