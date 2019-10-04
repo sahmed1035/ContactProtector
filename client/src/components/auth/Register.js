@@ -1,13 +1,27 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 // useState is for using component level states. for the form input values
 import AlertContext from "../../context/alert/alertContext"; // alert for password match
+import AuthContext from "../../context/auth/authContext";
 
 const Register = () => {
   // initializing alertContext
   const alertContext = useContext(AlertContext);
 
+  // initializing authContext
+  const authContext = useContext(AuthContext);
+
   // pulling out setAlert from alertContext
   const { setAlert } = alertContext;
+
+  const { register, error, clearErrors } = authContext;
+
+  //showing error in the UI. we want this to run when the error is added to state. need to add error value as a depencency to useEffect
+  useEffect(() => {
+    if (error === "Email already exists!") {
+      setAlert(error, "danger");
+      clearErrors();
+    }
+  }, [error]); //error value as a dependency. clearError in the AuthState.js
 
   const [user, setUser] = useState({
     //passing in an object with the fields of name and email
@@ -31,7 +45,12 @@ const Register = () => {
     } else if (password !== password2) {
       setAlert("Passwords do not match!", "danger");
     } else {
-      console.log("Register form submitted.");
+      register({
+        //register method with formData of name, email and password
+        name,
+        email,
+        password
+      });
     }
   };
 

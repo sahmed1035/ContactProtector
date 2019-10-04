@@ -7,10 +7,10 @@ import { Link } from "react-router-dom";
 const Navbar = ({ title, icon }) => {
   return (
     <div className="navbar bg-primary">
-      <h1 style={{ "padding-left": "40%" }}>
+      <h1 style={{ "padding-left": "20%" }}>
         <i className={icon} /> {title}
       </h1>
-      <ul>
+      <ul style={{ "padding-right": "10%" }}>
         <li>
           <Link to="/">Home</Link>
         </li>
