@@ -1,11 +1,20 @@
 // the Home is going to hold a few components from the contact filter, the contacts themselves.
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import Contacts from "../contacts/Contacts";
 import ContactForm from "../contacts/ContactForm";
 import ContactFilter from "../contacts/ContactFilter";
+import AuthContext from "../../context/auth/authContext";
 
 // for the layout of homepage, half page will be form and half will be contacts. will use grid
 const Home = () => {
+  const authContext = useContext(AuthContext);
+
+  // run it as soon as the component loads
+  useEffect(() => {
+    authContext.loadUser();
+
+    //eslint-disable-next-line
+  }, []); //putting [] so it only loads when the component loads. to handle dependency error put eslint
   return (
     <div className="grid-2">
       {/**First column starting */}

@@ -31,11 +31,12 @@ const User = require("../models/User");
 // First Route is to get the logged in user
 // @route GET api/auth (route, type of request, endpoint) Now '/' pertains to api/users
 // @desc Get logged in user
-// @access Private (getting a user who is logged in so it is private)
+// @access Private (getting a user who is logged in so it is private) need a token. we will store a global header with that token
 // this is a private protected route. anytime we need to protect a route, we need to bring in the middleware
 // pass it as a second parameter
 
 router.get("/", auth, async (req, res) => {
+  //loadUser private route
   try {
     const user = await User.findById(req.user.id).select("-password"); // send NO password
     res.json(user);

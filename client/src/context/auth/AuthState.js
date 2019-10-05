@@ -2,6 +2,7 @@ import React, { useReducer } from "react";
 import axios from "axios";
 import AuthContext from "./authContext";
 import authReducer from "./authReducer";
+import setAuthToken from "../../utils/setAuthToken";
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -32,24 +33,31 @@ const AuthState = props => {
    */
 
   const loadUser = async () => {
-    // @todo - load token into global headers
+    // check local storage. if true then in the setAuthToken method pass in localstorage.token.
+    if (localStorage.token) {
+      setAuthToken(localStorage.token); // also need in App.js.
+    }
 
     // to make a request, do a try catch
     try {
-      const res = await axios.get("/api/auth");
+      const res = await axios.get("/api/auth"); // private route needs a token to make a request. under route/auth.js
 
       dispatch({
         type: USER_LOADED,
-        payload: res.data
+        payload: res.data // actual user data
       });
+      //calling loadUser method
+      loadUser();
     } catch (err) {
-      dispatch({ type: AUTH_ERROR });
+      dispatch({
+        type: AUTH_ERROR
+      });
     }
   };
 
   // ACTION Register User.
   //Need to call register method in the Register Component. sign the user up. get a token back. post request. sending data, we need content type headers in json
-  const register = async FormData => {
+  const register = async formData => {
     const config = {
       headers: {
         "Content-Type": "application/json"
@@ -58,7 +66,7 @@ const AuthState = props => {
 
     // await on the axios post request which return a promise. res.data is going to have the token
     try {
-      const res = await axios.post("/api/users", FormData, config);
+      const res = await axios.post("/api/users", formData, config);
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data

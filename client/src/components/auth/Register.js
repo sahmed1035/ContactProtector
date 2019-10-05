@@ -3,7 +3,7 @@ import React, { useState, useContext, useEffect } from "react";
 import AlertContext from "../../context/alert/alertContext"; // alert for password match
 import AuthContext from "../../context/auth/authContext";
 
-const Register = () => {
+const Register = props => {
   // initializing alertContext
   const alertContext = useContext(AlertContext);
 
@@ -13,15 +13,21 @@ const Register = () => {
   // pulling out setAlert from alertContext
   const { setAlert } = alertContext;
 
-  const { register, error, clearErrors } = authContext;
+  const { register, error, clearErrors, isAuthenticated } = authContext;
 
   //showing error in the UI. we want this to run when the error is added to state. need to add error value as a depencency to useEffect
   useEffect(() => {
+    //if isAuthenticated true then redirect. in react to redirect we use props.history.push
+    if (isAuthenticated) {
+      props.history.push("/");
+    }
     if (error === "Email already exists!") {
       setAlert(error, "danger");
       clearErrors();
     }
-  }, [error]); //error value as a dependency. clearError in the AuthState.js
+
+    // eslint-disable-next-line
+  }, [error, isAuthenticated, props.history]); //error value as a dependency. clearError in the AuthState.js
 
   const [user, setUser] = useState({
     //passing in an object with the fields of name and email
