@@ -10,7 +10,8 @@ import {
   AUTH_ERROR,
   LOGIN_FAIL,
   LOGOUT,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  LOGIN_SUCCESS
 } from "../types";
 
 const AuthState = props => {
@@ -79,8 +80,30 @@ const AuthState = props => {
     }
   }; // 2-need to handle this in the authReducer.
 
-  //ACTION Login User. Log the user in. get the token.
-  const login = () => console.log("login");
+  //ACTION Login User. Log the user in. get the token. 1. take formData. send the request to /api/auth
+  const login = async formData => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    try {
+      const res = await axios.post("/api/auth", formData, config);
+
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data
+      });
+
+      loadUser();
+    } catch (err) {
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: err.response.data.msg
+      });
+    }
+  };
 
   // ACTION Logout. this will destory the token and clear everything up.
   const logout = () => console.log("logout");
