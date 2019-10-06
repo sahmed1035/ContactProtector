@@ -106,7 +106,7 @@ const AuthState = props => {
   };
 
   // ACTION Logout. this will destory the token and clear everything up.
-  const logout = () => console.log("logout");
+  const logout = () => dispatch({ type: LOGOUT });
 
   //ACTION Clear Errors. clear out any errors in the state.
 

@@ -30,10 +30,11 @@ export default (state, action) => {
         loading: false // changing it true to false
       };
 
-    // same for 3 cases. remove the token
+    // same for 4 cases. remove the token
     case REGISTER_FAIL:
     case AUTH_ERROR:
     case LOGIN_FAIL:
+    case LOGOUT: // call it in the Navbar
       // remove the token from local storage
       localStorage.removeItem("token");
 
