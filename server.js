@@ -1,10 +1,15 @@
-// entry point to our backend
-// creating Express Server
-// import Express from "express"; we can't use the import syntax without implementing babble or typescript. otherwise we have to use required syntax to bring in modules which is called commonJS.
-// when we use React it actually uses ES6 modules which has import syntax.
+/**
+ * entry point to our backend
+ * creating Express Server
+ * import Express from "express"; we can't use the import syntax without implementing babble or typescript.
+ * otherwise we have to use required syntax to bring in modules which is called commonJS.
+ * when we use React it actually uses ES6 modules which has import syntax.
+ */
+
 const express = require("express");
 // bringing in connectDB
 const connectDB = require("./config/db");
+const path = require("path");
 
 // initializing express into a variable called app.
 const app = express();
@@ -24,10 +29,6 @@ const PORT = process.env.PORT || 5000;
  * it takes an arrow function with a request and response object. we will do res dot send. we will just send Hello World.
  app.get("/", (req, res) => res.send("Hello World!"));
  */
-//we need to get res.json becuase it is going to be a json API.
-app.get("/", (req, res) =>
-  res.json({ msg: "Welcome to the ContactProtector API" })
-);
 
 // Define Routes
 /**
@@ -37,6 +38,23 @@ app.get("/", (req, res) =>
 app.use("/api/users", require("./routes/users")); // '/api/users/' is going to get forwarded to the file users
 app.use("/api/contacts", require("./routes/contacts"));
 app.use("/api/auth", require("./routes/auth"));
+
+/**
+ * Serve static assets (React) in production
+ * check the environment to make sure it is production.
+ * if true, set a static folder. static asset that react built for us after running npm run build
+ * then create a route.
+ */
+if (process.env.NODE_ENV === "production") {
+  // set static folder
+  app.use(express.static("client/buid"));
+
+  // creating a route below the other routes. defining * anything But those above routes.
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+  );
+}
+
 /***NOW SERVER SHOULD RUN:
  * node server.js will not run nodemon dependency.
  * npm run server . it will run nodemon with the server.
