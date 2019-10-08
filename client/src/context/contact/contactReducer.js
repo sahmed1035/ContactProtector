@@ -24,10 +24,11 @@ export default (state, action) => {
     case ADD_CONTACT:
       return {
         ...state, // return the current contact
-        contacts: [...state.contacts, action.payload],
+        contacts: [action.payload, ...state.contacts],
         /**
          *  since state is immutable, we have to copy what's already there by spread operator.
          * we want to add our data which we sent in the payload.
+         * put action.payload in the beginning so that when we add a new contact, it shows on the top.
          */
 
         loading: false
@@ -37,7 +38,7 @@ export default (state, action) => {
       return {
         ...state,
         contacts: state.contacts.filter(
-          contact => contact.id !== action.payload
+          contact => contact._id !== action.payload
         ),
         loading: false
       };
@@ -68,7 +69,7 @@ export default (state, action) => {
         ...state,
         //take the contactS array and set that to map. for each contact check the condition to match the id.
         contacts: state.contacts.map(contact =>
-          contact.id === action.payload.id ? action.payload : contact
+          contact._id === action.payload._id ? action.payload : contact
         ),
         //action.payload has the updated contact.
         loading: false

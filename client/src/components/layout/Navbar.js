@@ -3,8 +3,11 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/auth/authContext";
 import ContactContext from "../../context/contact/contactContext";
-// every component is going to be functional component with hooks. racf
-// 2 properites title and icon
+
+/**
+ * every component is going to be functional component with hooks. racf
+ * 2 properites title and icon
+ */
 
 const Navbar = ({ title, icon }) => {
   // initializing variable
@@ -60,7 +63,7 @@ const Navbar = ({ title, icon }) => {
       <h1 style={{ marginLeft: "1%" }}>
         <i className={icon} /> {title}
       </h1>
-      <ul style={{ "padding-right": "10%" }}>
+      <ul style={{ paddingRight: "10%" }}>
         {isAuthenticated ? authLinks : guestLinks}
       </ul>
     </div>
