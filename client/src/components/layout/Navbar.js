@@ -2,19 +2,23 @@ import React, { Fragment, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/auth/authContext";
+import ContactContext from "../../context/contact/contactContext";
 // every component is going to be functional component with hooks. racf
 // 2 properites title and icon
 
 const Navbar = ({ title, icon }) => {
   // initializing variable
   const authContext = useContext(AuthContext);
+  const contactContext = useContext(ContactContext);
 
   // pulling out from the authContext
   const { isAuthenticated, logout, user } = authContext;
+  const { clearContacts } = contactContext;
 
   //onLogout
   const onLogout = () => {
     logout();
+    clearContacts();
   };
 
   //divide up the links based on if we are logged in or not.
@@ -53,7 +57,7 @@ const Navbar = ({ title, icon }) => {
 
   return (
     <div className="navbar bg-primary">
-      <h1 style={{ "margin-left": "1%" }}>
+      <h1 style={{ marginLeft: "1%" }}>
         <i className={icon} /> {title}
       </h1>
       <ul style={{ "padding-right": "10%" }}>

@@ -11,11 +11,11 @@ const ContactItem = ({ contact }) => {
   const { deleteContact, setCurrent, clearCurrent } = contactContext;
   // destructuring the contact prop that is passed in.
   // badge class to show personal or professional. span that is dynamic. dependant on the type. using turnary to check if personal or professional
-  const { id, name, email, phone, type } = contact;
+  const { _id, name, email, phone, type } = contact;
 
   // ON Delete METHOD
   const onDelete = () => {
-    deleteContact(id);
+    deleteContact(_id);
     clearCurrent();
   };
 
