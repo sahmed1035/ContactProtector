@@ -19,9 +19,6 @@ connectDB();
 
 // Init Middleware. middle ware used to be body parser but now included with express. Now we can accept data
 app.use(express.json({ extended: false }));
-// creating a variable for the port. process.env.PORT will look for an environment variable called PORT first and
-// this will be used in production. OR anyport we want ||
-const PORT = process.env.PORT || 5000;
 
 /***Endpoints to hit. Open up postman and type http://localhost:5000
  * adding an endpoint (route) for the home page by using app dot and then whatever the request we want to handle.
@@ -36,8 +33,8 @@ const PORT = process.env.PORT || 5000;
  * whenever someone hits the route /api/users, it is going to look for the users.js. so we are going to require it.
  */
 app.use("/api/users", require("./routes/users")); // '/api/users/' is going to get forwarded to the file users
-app.use("/api/contacts", require("./routes/contacts"));
 app.use("/api/auth", require("./routes/auth"));
+app.use("/api/contacts", require("./routes/contacts"));
 
 /**
  * Serve static assets (React) in production
@@ -47,7 +44,7 @@ app.use("/api/auth", require("./routes/auth"));
  */
 if (process.env.NODE_ENV === "production") {
   // set static folder
-  app.use(express.static("client/buid"));
+  app.use(express.static("client/build"));
 
   // creating a route below the other routes. defining * anything But those above routes.
   app.get("*", (req, res) =>
@@ -59,6 +56,10 @@ if (process.env.NODE_ENV === "production") {
  * node server.js will not run nodemon dependency.
  * npm run server . it will run nodemon with the server.
  */
+// creating a variable for the port. process.env.PORT will look for an environment variable called PORT first and
+// this will be used in production. OR anyport we want ||
+const PORT = process.env.PORT || 5000;
+
 // this app object will have a listen method. this is going to take in a port to listen on.
 // it can take in a callback if we want something else to happen. we will do a console log. using backtick to use {}
 app.listen(PORT, () =>
