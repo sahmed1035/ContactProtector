@@ -10,7 +10,7 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 
 // (npm install --save express-validator). requiring
-const { check, validationResult } = require("express-validator");
+const { check, validationResult } = require("express-validator/check");
 
 // bringing User model
 const User = require("../models/User");

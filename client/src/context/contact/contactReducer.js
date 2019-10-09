@@ -17,19 +17,20 @@ export default (state, action) => {
     case GET_CONTACTS:
       return {
         ...state,
-        contacts: action.payload, //fill in the contacts state with the payload which has the data.
+        contacts: action.payload,
+        //fill in the contacts state with the payload which has the data.
         loading: false
       };
 
+    /**
+     *  since state is immutable, we have to copy what's already there by spread operator.
+     * we want to add our data which we sent in the payload.
+     * put action.payload in the beginning so that when we add a new contact, it shows on the top.
+     */
     case ADD_CONTACT:
       return {
         ...state, // return the current contact
         contacts: [action.payload, ...state.contacts],
-        /**
-         *  since state is immutable, we have to copy what's already there by spread operator.
-         * we want to add our data which we sent in the payload.
-         * put action.payload in the beginning so that when we add a new contact, it shows on the top.
-         */
 
         loading: false
       };

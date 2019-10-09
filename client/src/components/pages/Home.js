@@ -12,27 +12,19 @@ import AuthContext from "../../context/auth/authContext";
 const Home = () => {
   const authContext = useContext(AuthContext);
 
-  // run it as soon as the component loads. we are going to stay authenticated no matter if we reload.
   useEffect(() => {
     authContext.loadUser();
-
-    //eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
-  //putting [] so it only loads when the component loads. to handle dependency error put eslint
+
   return (
-    <div className="container" style={{ background: "white", width: "80%" }}>
-      <div className="grid-2">
-        {/**First column starting */}
-        <div>
-          <ContactForm />
-        </div>
-        {/**First column ending */}
-        {/**Second column starting */}
-        <div>
-          <ContactFilter />
-          <Contacts />
-        </div>
-        {/**Second column starting */}
+    <div className="grid-2">
+      <div>
+        <ContactForm />
+      </div>
+      <div>
+        <ContactFilter />
+        <Contacts />
       </div>
     </div>
   );

@@ -22,9 +22,12 @@ module.exports = function(req, res, next) {
   // if there is a token, we need to varify it. put a try catch. we need to pass a token and varify it.
   try {
     const decoded = jwt.verify(token, config.get("jwtSecret"));
-    // once it is varified, the payload is going to be put into decoded.
-    // we want to take the user out. we only have the user I.D. but we are going to assign that user to the
-    // request object.
+    /**
+     * once it is varified, the payload is going to be put into decoded.
+     * we want to take the user out. we only have the user I.D. but we are going to assign that user to the request object.
+     *
+     */
+
     req.user = decoded.user;
     next();
   } catch (err) {

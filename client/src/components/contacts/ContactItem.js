@@ -33,18 +33,17 @@ const ContactItem = ({ contact }) => {
         <span
           style={{ float: "right" }}
           className={
-            "badge " + (type === "personal" ? "badge-primary" : "badge-success")
+            "badge " +
+            (type === "professional" ? "badge-success" : "badge-primary")
           }
         >
-          {/* making first letter of type upperCase. concatinating with rest of the letters. */}
           {type.charAt(0).toUpperCase() + type.slice(1)}
         </span>
       </h3>
-      {/* rest of the fields. Email not required so if it is provided then show it with the icon */}
       <ul className="list">
         {email && (
           <li>
-            <i className="fas fa-envelope-open"></i> {email}
+            <i className="fas fa-envelope-open" /> {email}
           </li>
         )}
         {phone && (
@@ -53,7 +52,6 @@ const ContactItem = ({ contact }) => {
           </li>
         )}
       </ul>
-      {/* buttons for CRUD */}
       <p>
         <button
           className="btn btn-dark btn-sm"
@@ -61,7 +59,6 @@ const ContactItem = ({ contact }) => {
         >
           Edit
         </button>
-
         <button className="btn btn-danger btn-sm" onClick={onDelete}>
           Delete
         </button>
@@ -73,4 +70,5 @@ const ContactItem = ({ contact }) => {
 ContactItem.propTypes = {
   contact: PropTypes.object.isRequired
 };
+
 export default ContactItem;

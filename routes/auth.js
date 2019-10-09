@@ -1,10 +1,13 @@
-// registring users routes
-//we need Being able to login to get a token as well.
-//Login authentication route is going to go in our outh.js.
-// bringing express so that we can use the router
 const express = require("express");
+// bringing express so that we can use the router
 // create a variable router and set that to express.Router
 const router = express.Router();
+
+/**
+ * registring users routes
+ * we need Being able to login to get a token as well.
+ * Login authentication route is going to go in our auth.js.
+ */
 
 const bcrypt = require("bcryptjs");
 // bringing JSON Web Token
@@ -16,7 +19,7 @@ const config = require("config");
 const auth = require("../middleware/auth");
 
 // (npm install --save express-validator). requiring
-const { check, validationResult } = require("express-validator");
+const { check, validationResult } = require("express-validator/check");
 
 // bringing User model
 const User = require("../models/User");
@@ -46,11 +49,14 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-// Second Route is to actually login the user and get the token.
-// @route POST api/auth ( sending data to get authenticated)
-// @desc Auth user and get token
-// @access Public (so that u can access the private routes)
-// validation to check if there is an email and a password sent.
+/***
+ * Second Route is to actually login the user and get the token.
+ * route POST api/auth ( sending data to get authenticated)
+ * desc Auth user and get token
+ *  access Public (so that u can access the private routes)
+ * validation to check if there is an email and a password sent.
+ */
+
 router.post(
   "/",
   [

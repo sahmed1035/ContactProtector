@@ -7,13 +7,11 @@ import ContactContext from "../../context/contact/contactContext";
  * we want to pull in the contacts from the state into the Contacts Commponent
  * and then we'll loop through them creating a list and output a contact item for each one.
  */
-
+/**
+ * initializing ontactContext by setting it to useContext hook and pass in ContactContext that we brought in.
+ * now we will have access to any state or actions associated with this context.
+ */
 const Contacts = () => {
-  /**
-   * initializing ontactContext by setting it to useContext hook and pass in ContactContext that we brought in.
-   * now we will have access to any state or actions associated with this context.
-   */
-
   const contactContext = useContext(ContactContext);
 
   // pulling out with destructuring
@@ -27,7 +25,7 @@ const Contacts = () => {
 
   // if there is no contacts then show a message.
   if (contacts !== null && contacts.length === 0 && !loading) {
-    return <h4>Please add a contact.</h4>;
+    return <h4>Please add a contact</h4>;
   }
 
   /**
@@ -38,13 +36,10 @@ const Contacts = () => {
 
   return (
     <Fragment>
-      {/**condition statement for Showin spinner */}
       {contacts !== null && !loading ? (
         <TransitionGroup>
-          {/* need to figure out if there is anything inside the filtered or not. if there is, that's what we want to show. */}
           {filtered !== null
             ? filtered.map(contact => (
-                // classNameS with an s
                 <CSSTransition
                   key={contact._id}
                   timeout={500}
