@@ -15,7 +15,6 @@ const Navbar = ({ title, icon }) => {
     logout();
     clearContacts();
   };
-
   //divide up the links based on if we are logged in or not.
 
   //LOGEDIN USER
@@ -31,14 +30,14 @@ const Navbar = ({ title, icon }) => {
     </Fragment>
   );
 
-  // GUEST USERS
+  // Guest Links
   const guestLinks = (
     <Fragment>
       <li>
-        <Link to="/register">Register</Link>
+        <Link to="/login">Login</Link>
       </li>
       <li>
-        <Link to="/login">Login</Link>
+        <Link to="/register">Register</Link>
       </li>
 
       <li>

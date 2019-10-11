@@ -1,58 +1,45 @@
-import React, { useState, useContext, useEffect } from "react";
-// useState is for using component level states. for the form input values
-import AlertContext from "../../context/alert/alertContext"; // alert for password match
-import AuthContext from "../../context/auth/authContext";
+import React, { useState, useContext, useEffect } from 'react';
+import AlertContext from '../../context/alert/alertContext';
+import AuthContext from '../../context/auth/authContext';
 
 const Register = props => {
-  // initializing alertContext
   const alertContext = useContext(AlertContext);
-
-  // initializing authContext
   const authContext = useContext(AuthContext);
 
-  // pulling out setAlert from alertContext
   const { setAlert } = alertContext;
-
   const { register, error, clearErrors, isAuthenticated } = authContext;
 
-  //showing error in the UI. we want this to run when the error is added to state. need to add error value as a depencency to useEffect
   useEffect(() => {
-    //if isAuthenticated true then redirect. in react to redirect we use props.history.push
     if (isAuthenticated) {
-      props.history.push("/");
+      props.history.push('/');
     }
-    if (error === "Email already exists!") {
-      setAlert(error, "danger");
+
+    if (error === 'User already exists') {
+      setAlert(error, 'danger');
       clearErrors();
     }
-
     // eslint-disable-next-line
-  }, [error, isAuthenticated, props.history]); //error value as a dependency. clearError in the AuthState.js
+  }, [error, isAuthenticated, props.history]);
 
   const [user, setUser] = useState({
-    //passing in an object with the fields of name and email
-    name: "",
-    email: "",
-    password: "",
-    password2: ""
+    name: '',
+    email: '',
+    password: '',
+    password2: ''
   });
 
-  // destructuring so that we can use them as variables
   const { name, email, password, password2 } = user;
 
-  // onChange method. spread operator to get the current value of the user. e.target.name to GET the label(attribute). e.target.value to SET the value
   const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
 
-  // onSubmit method: checking for required fiels and password match.
   const onSubmit = e => {
     e.preventDefault();
-    if (name === "" || email === "" || password === "") {
-      setAlert("All fields are required", "danger");
+    if (name === '' || email === '' || password === '') {
+      setAlert('Please enter all fields', 'danger');
     } else if (password !== password2) {
-      setAlert("Passwords do not match!", "danger");
+      setAlert('Passwords do not match', 'danger');
     } else {
       register({
-        //register method with formData of name, email and password
         name,
         email,
         password
@@ -61,53 +48,57 @@ const Register = props => {
   };
 
   return (
-    <div className="form-container">
+    <div className='form-container'>
       <h1>
-        Account <span className="text-dark">Register</span>
+        Account <span className='text-primary'>Register</span>
       </h1>
       <form onSubmit={onSubmit}>
-        {/* Name */}
-        <div className="form-group">
-          <label htmlFor="name">Name</label>
-          <input type="text" name="name" value={name} onChange={onChange} />
-        </div>
-        {/* Email */}
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
+        <div className='form-group'>
+          <label htmlFor='name'>Name</label>
           <input
-            type="email"
-            name="email"
+            type='text'
+            name='name'
+            value={name}
+            onChange={onChange}
+            required
+          />
+        </div>
+        <div className='form-group'>
+          <label htmlFor='email'>Email Address</label>
+          <input
+            type='email'
+            name='email'
             value={email}
             onChange={onChange}
             required
           />
         </div>
-        {/* Password */}
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
+        <div className='form-group'>
+          <label htmlFor='password'>Password</label>
           <input
-            type="password"
-            name="password"
+            type='password'
+            name='password'
             value={password}
             onChange={onChange}
             required
-            minLength="6"
+            minLength='6'
           />
         </div>
-        {/* Confirm Password */}
-        <div className="form-group">
-          <label htmlFor="password2">Confirm Password</label>
+        <div className='form-group'>
+          <label htmlFor='password2'>Confirm Password</label>
           <input
-            type="password"
-            name="password2"
+            type='password'
+            name='password2'
             value={password2}
             onChange={onChange}
+            required
+            minLength='6'
           />
         </div>
         <input
-          type="submit"
-          value="Register"
-          className="btn btn-primary btn-block"
+          type='submit'
+          value='Register'
+          className='btn btn-primary btn-block'
         />
       </form>
     </div>

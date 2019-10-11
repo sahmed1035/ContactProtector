@@ -1,13 +1,8 @@
-import React, { useContext, useEffect } from "react";
-import Contacts from "../contacts/Contacts";
-import ContactForm from "../contacts/ContactForm";
-import ContactFilter from "../contacts/ContactFilter";
-import AuthContext from "../../context/auth/authContext";
-
-/**
- * the Home is going to hold a few components from the contact filter, the contacts themselves.
- * for the layout of homepage, half page will be form and half will be contacts. will use grid
- */
+import React, { useContext, useEffect } from 'react';
+import Contacts from '../contacts/Contacts';
+import ContactForm from '../contacts/ContactForm';
+import ContactFilter from '../contacts/ContactFilter';
+import AuthContext from '../../context/auth/authContext';
 
 const Home = () => {
   const authContext = useContext(AuthContext);
@@ -18,7 +13,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="grid-2">
+    <div className='grid-2'>
       <div>
         <ContactForm />
       </div>

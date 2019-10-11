@@ -1,6 +1,5 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-// creating schemas. takes in objects of properties.
 const UserSchema = mongoose.Schema({
   name: {
     type: String,
@@ -20,5 +19,5 @@ const UserSchema = mongoose.Schema({
     default: Date.now
   }
 });
-// will be using it in user route file
-module.exports = mongoose.model("user", UserSchema);
+
+module.exports = mongoose.model('user', UserSchema);
